@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>上海&华南工程粉销量</title>
+    <title>上海&amp;华南工程粉销量</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -262,21 +262,21 @@
 <body>
 
 <div class="header">
-    <h1>上海&华南工程粉销量</h1>
+    <h1>上海&amp;华南工程粉销量</h1>
     <div class="subtitle">圣戈班 · 销售团队数据看板</div>
 </div>
 
 <!-- 数据说明 -->
 <div class="data-note" id="dataNote">
-    数据来源：Sales Report_工程粉_20260519（截至5月19日）
+    数据来源：转发: Sales Report_工程粉_20260519（截至2026-05-20）
 </div>
 
 <!-- 团队总览 -->
 <div class="team-overview">
     <div class="overview-card">
         <div class="label">团队本月销量 (MTD)</div>
-        <div class="value unit" id="teamMtd">78.5</div>
-        <div class="sub">截至2026-05-19</div>
+        <div class="value unit" id="teamMtd">78.50</div>
+        <div class="sub">截至2026-05-20</div>
     </div>
     <div class="overview-card">
         <div class="label">团队年度销量 (YTD)</div>
@@ -308,7 +308,7 @@
         <div class="region-card">
             <div class="region-name">华南区域</div>
             <div class="region-value huanan unit" id="hunanMtd">2.56</div>
-            <div class="region-sub">莫应坤</div>
+            <div class="region-sub">莫英坤</div>
         </div>
     </div>
 </div>
@@ -374,10 +374,10 @@
             <div class="pct-text" id="wangPct">完成度 26.98%</div>
         </div>
 
-        <!-- 莫应坤 -->
+        <!-- 莫英坤 -->
         <div class="sale-item mo">
             <div class="sale-header">
-                <span class="sale-name">莫应坤</span>
+                <span class="sale-name">莫英坤</span>
                 <span class="sale-region-tag tag-huanan">华南</span>
             </div>
             <div class="sale-row">
@@ -402,7 +402,7 @@
 </div>
 
 <div class="footer">
-    数据更新时间：2026-05-19 · 来源：Sales Report_工程粉日报
+    数据更新时间：2026-05-20 · 来源：Sales Report_工程粉日报
 </div>
 
 <script>
@@ -415,13 +415,13 @@
     new Chart(progCtx, {
         type: 'bar',
         data: {
-            labels: ['杨新弘 37.56%', '王波 26.98%', '莫应坤 17.78%'],
+            labels: ["杨新弘 37.56%", "王波 26.98%", "莫英坤 17.78%"],
             datasets: [
                 {
                     label: '已完成',
                     data: [37.56, 26.98, 17.78],
-                    backgroundColor: ['rgba(56,189,248,0.8)', 'rgba(52,211,153,0.8)', 'rgba(167,139,250,0.8)'],
-                    borderColor: ['#38bdf8', '#34d399', '#a78bfa'],
+                    backgroundColor: ["rgba(38bdf856,139,189,223,248,0.8)", "rgba(34d39952,77,211,57,153,0.8)", "rgba(a78bfa167,120,139,191,250,0.8)"],
+                    borderColor: ["#38bdf8", "#34d399", "#a78bfa"],
                     borderWidth: 1,
                     borderRadius: 4,
                 }
