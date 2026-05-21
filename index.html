@@ -40,7 +40,10 @@
             border-color: rgba(56,189,248,0.4);
             color: #38bdf8;
         }
-        .switch-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); }
+        .switch-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.3);
+        }
 
         .header {
             text-align: center;
@@ -48,65 +51,250 @@
             border-bottom: 1px solid rgba(255,255,255,0.08);
             margin-bottom: 14px;
         }
-        .header h1 { font-size: 18px; font-weight: 700; color: #f8fafc; letter-spacing: 1px; }
-        .header .subtitle { font-size: 11px; color: #94a3b8; margin-top: 4px; }
-        .team-overview { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
-        .overview-card { background: rgba(30,41,59,0.7); border-radius: 12px; padding: 12px; border: 1px solid rgba(255,255,255,0.06); text-align: center; }
-        .overview-card .label { font-size: 11px; color: #94a3b8; margin-bottom: 4px; }
-        .overview-card .value { font-size: 22px; font-weight: 800; color: #38bdf8; }
-        .overview-card .value.unit::after { content: '万'; font-size: 12px; font-weight: 500; margin-left: 2px; color: #94a3b8; }
-        .overview-card .sub { font-size: 10px; color: #64748b; margin-top: 2px; }
-        .overview-card.highlight { grid-column: span 2; background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(99,102,241,0.08)); border-color: rgba(56,189,248,0.15); }
-        .progress-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; margin-top: 6px; }
-        .progress-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
+        .header h1 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #f8fafc;
+            letter-spacing: 1px;
+        }
+        .header .subtitle {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        /* 团队总览卡片 */
+        .team-overview {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+        .overview-card {
+            background: rgba(30,41,59,0.7);
+            border-radius: 12px;
+            padding: 12px;
+            border: 1px solid rgba(255,255,255,0.06);
+            text-align: center;
+        }
+        .overview-card .label {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-bottom: 4px;
+        }
+        .overview-card .value {
+            font-size: 22px;
+            font-weight: 800;
+            color: #38bdf8;
+        }
+        .overview-card .value.unit::after {
+            content: '万';
+            font-size: 12px;
+            font-weight: 500;
+            margin-left: 2px;
+            color: #94a3b8;
+        }
+        .overview-card .sub {
+            font-size: 10px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+        .overview-card.highlight {
+            grid-column: span 2;
+            background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(99,102,241,0.08));
+            border-color: rgba(56,189,248,0.15);
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.8s ease;
+        }
         .progress-fill.blue { background: linear-gradient(90deg, #38bdf8, #818cf8); }
 
-        .region-section { background: rgba(30,41,59,0.5); border-radius: 12px; padding: 14px; margin-bottom: 14px; border: 1px solid rgba(255,255,255,0.06); }
-        .section-title { font-size: 14px; font-weight: 600; color: #f1f5f9; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
-        .section-title::before { content: ''; width: 3px; height: 14px; background: #38bdf8; border-radius: 2px; }
-        .region-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .region-card { background: rgba(15,23,42,0.5); border-radius: 10px; padding: 12px; text-align: center; }
-        .region-name { font-size: 13px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px; }
-        .region-value { font-size: 20px; font-weight: 800; }
+        /* 区域卡片 */
+        .region-section {
+            background: rgba(30,41,59,0.5);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 14px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .section-title::before {
+            content: '';
+            width: 3px;
+            height: 14px;
+            background: #38bdf8;
+            border-radius: 2px;
+        }
+
+        .region-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .region-card {
+            background: rgba(15,23,42,0.5);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+        }
+        .region-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #cbd5e1;
+            margin-bottom: 6px;
+        }
+        .region-value {
+            font-size: 20px;
+            font-weight: 800;
+        }
         .region-value.shanghai { color: #38bdf8; }
         .region-value.huanan { color: #a78bfa; }
-        .region-value.unit::after { content: '万'; font-size: 11px; font-weight: 500; margin-left: 2px; color: #64748b; }
-        .region-sub { font-size: 10px; color: #64748b; margin-top: 4px; }
+        .region-value.unit::after {
+            content: '万';
+            font-size: 11px;
+            font-weight: 500;
+            margin-left: 2px;
+            color: #64748b;
+        }
+        .region-sub {
+            font-size: 10px;
+            color: #64748b;
+            margin-top: 4px;
+        }
 
-        .chart-section { background: rgba(30,41,59,0.5); border-radius: 12px; padding: 14px; margin-bottom: 14px; border: 1px solid rgba(255,255,255,0.06); }
-        .chart-container { position: relative; width: 100%; height: 240px; }
+        /* 图表容器 */
+        .chart-section {
+            background: rgba(30,41,59,0.5);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 14px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 240px;
+        }
 
-        .sales-list { display: flex; flex-direction: column; gap: 10px; }
-        .sale-item { background: rgba(15,23,42,0.5); border-radius: 10px; padding: 12px; border-left: 3px solid; }
+        /* 个人销售列表 */
+        .sales-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .sale-item {
+            background: rgba(15,23,42,0.5);
+            border-radius: 10px;
+            padding: 12px;
+            border-left: 3px solid;
+        }
         .sale-item.yang { border-left-color: #38bdf8; }
         .sale-item.wang { border-left-color: #34d399; }
         .sale-item.mo { border-left-color: #a78bfa; }
-        .sale-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .sale-name { font-size: 14px; font-weight: 600; color: #f1f5f9; }
-        .sale-region-tag { font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 500; }
+        .sale-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .sale-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+        .sale-region-tag {
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 500;
+        }
         .tag-shanghai { background: rgba(56,189,248,0.15); color: #38bdf8; }
         .tag-huanan { background: rgba(167,139,250,0.15); color: #a78bfa; }
-        .sale-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-        .sale-label { font-size: 11px; color: #94a3b8; }
-        .sale-data { font-size: 14px; font-weight: 700; }
+        .sale-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .sale-label {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+        .sale-data {
+            font-size: 14px;
+            font-weight: 700;
+        }
         .sale-data.mtd { color: #fbbf24; }
         .sale-data.ytd { color: #38bdf8; }
         .sale-data.target { color: #94a3b8; }
-        .mini-progress { width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden; }
-        .mini-progress .fill { height: 100%; border-radius: 3px; transition: width 0.8s ease; }
+        .mini-progress {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .mini-progress .fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.8s ease;
+        }
         .fill.yang-fill { background: linear-gradient(90deg, #38bdf8, #60a5fa); }
         .fill.wang-fill { background: linear-gradient(90deg, #34d399, #4ade80); }
         .fill.mo-fill { background: linear-gradient(90deg, #a78bfa, #c084fc); }
-        .pct-text { font-size: 11px; color: #64748b; text-align: right; margin-top: 3px; }
-        .footer { text-align: center; font-size: 10px; color: #475569; padding: 10px 0; }
-        .data-note { background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.2); border-radius: 8px; padding: 8px 12px; font-size: 11px; color: #fbbf24; margin-bottom: 14px; text-align: center; }
+        .pct-text {
+            font-size: 11px;
+            color: #64748b;
+            text-align: right;
+            margin-top: 3px;
+        }
+
+        /* 底部时间 */
+        .footer {
+            text-align: center;
+            font-size: 10px;
+            color: #475569;
+            padding: 10px 0;
+        }
+
+        /* 数据更新提示 */
+        .data-note {
+            background: rgba(251,191,36,0.08);
+            border: 1px solid rgba(251,191,36,0.2);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 11px;
+            color: #fbbf24;
+            margin-bottom: 14px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
+<!-- 顶部切换按钮 -->
 <div class="top-switch">
     <a href="index.html" class="switch-btn active">上海&华南</a>
     <a href="jiangsu.html" class="switch-btn">江苏团队</a>
+    <a href="anhui.html" class="switch-btn">安徽团队</a>
 </div>
 
 <div class="header">
@@ -114,40 +302,43 @@
     <div class="subtitle">圣戈班 · 销售团队数据看板</div>
 </div>
 
+<!-- 数据说明 -->
 <div class="data-note" id="dataNote">
-    数据来源：转发: Sales Report_工程粉_20260521（截至05月21日）
+    数据来源：Sales Report_工程粉_20260521（截至5月21日）
 </div>
 
+<!-- 团队总览 -->
 <div class="team-overview">
     <div class="overview-card">
         <div class="label">团队本月销量 (MTD)</div>
-        <div class="value unit" id="teamMtd">91.31</div>
-        <div class="sub">截至05月21日</div>
+        <div class="value unit" id="teamMtd">84.51</div>
+        <div class="sub">截至2026-05-20</div>
     </div>
     <div class="overview-card">
         <div class="label">团队年度销量 (YTD)</div>
-        <div class="value unit" id="teamYtd">587.29</div>
+        <div class="value unit" id="teamYtd">580.50</div>
         <div class="sub">2026年累计</div>
     </div>
     <div class="overview-card highlight">
         <div class="label">团队年度目标完成度</div>
-        <div class="value"><span id="teamPct">31.57</span><span style="font-size:14px;color:#94a3b8;margin-left:2px;">%</span></div>
+        <div class="value"><span id="teamPct">31.21</span><span style="font-size:14px;color:#94a3b8;margin-left:2px;">%</span></div>
         <div style="display:flex;justify-content:space-between;font-size:11px;color:#64748b;margin-top:4px;">
-            <span>已达成 587.29 / 1860 万</span>
-            <span id="teamRemaining">剩余 1272.71 万</span>
+            <span>已达成 580.50 / 1860 万</span>
+            <span id="teamRemaining">剩余 1279.50 万</span>
         </div>
         <div class="progress-bar">
-            <div class="progress-fill blue" id="teamProgress" style="width: 31.57%"></div>
+            <div class="progress-fill blue" id="teamProgress" style="width: 31.21%"></div>
         </div>
     </div>
 </div>
 
+<!-- 区域销量 -->
 <div class="region-section">
     <div class="section-title">区域本月销量</div>
     <div class="region-grid">
         <div class="region-card">
             <div class="region-name">上海区域</div>
-            <div class="region-value shanghai unit" id="shanghaiMtd">88.75</div>
+            <div class="region-value shanghai unit" id="shanghaiMtd">81.95</div>
             <div class="region-sub">杨新弘 + 王波</div>
         </div>
         <div class="region-card">
@@ -158,6 +349,7 @@
     </div>
 </div>
 
+<!-- 个人年度目标完成度 -->
 <div class="chart-section">
     <div class="section-title">个人年度目标完成度</div>
     <div class="chart-container" style="height:220px;">
@@ -165,10 +357,12 @@
     </div>
 </div>
 
+<!-- 个人明细 -->
 <div class="region-section">
     <div class="section-title">个人销售明细</div>
     <div class="sales-list">
 
+        <!-- 杨新弘 -->
         <div class="sale-item yang">
             <div class="sale-header">
                 <span class="sale-name">杨新弘</span>
@@ -176,22 +370,23 @@
             </div>
             <div class="sale-row">
                 <span class="sale-label">本月销量 (MTD)</span>
-                <span class="sale-data mtd" id="yangMtd">63.07<span style="font-size:11px;color:#64748b;"> 万</span></span>
+                <span class="sale-data mtd" id="yangMtd">56.27<span style="font-size:11px;color:#64748b;"> 万</span></span>
             </div>
             <div class="sale-row">
                 <span class="sale-label">年度累计 (YTD)</span>
-                <span class="sale-data ytd" id="yangYtd">388.39<span style="font-size:11px;color:#64748b;"> 万</span></span>
+                <span class="sale-data ytd" id="yangYtd">381.60<span style="font-size:11px;color:#64748b;"> 万</span></span>
             </div>
             <div class="sale-row">
                 <span class="sale-label">年度目标</span>
                 <span class="sale-data target">1000 万</span>
             </div>
             <div class="mini-progress">
-                <div class="fill yang-fill" id="yangProgress" style="width: 38.84%"></div>
+                <div class="fill yang-fill" id="yangProgress" style="width: 38.16%"></div>
             </div>
-            <div class="pct-text" id="yangPct">完成度 38.84%</div>
+            <div class="pct-text" id="yangPct">完成度 38.16%</div>
         </div>
 
+        <!-- 王波 -->
         <div class="sale-item wang">
             <div class="sale-header">
                 <span class="sale-name">王波</span>
@@ -215,6 +410,7 @@
             <div class="pct-text" id="wangPct">完成度 26.98%</div>
         </div>
 
+        <!-- 莫英坤 -->
         <div class="sale-item mo">
             <div class="sale-header">
                 <span class="sale-name">莫英坤</span>
@@ -242,35 +438,56 @@
 </div>
 
 <div class="footer">
-    数据更新时间：2026-05-21 · 来源：Sales Report_工程粉日报
+    数据更新时间：2026-05-20 · 来源：Sales Report_工程粉日报
 </div>
 
 <script>
+// ===== 水平条形图：个人年度目标完成度 =====
 (function() {
     var ctx = document.getElementById('progressChart');
     if (!ctx) return;
     var progCtx = ctx.getContext('2d');
+
     new Chart(progCtx, {
         type: 'bar',
         data: {
-            labels: ["杨新弘 38.84%", "王波 26.98%", "莫英坤 17.78%"],
-            datasets: [{
-                label: '已完成',
-                data: [38.84, 26.98, 17.78],
-                backgroundColor: ["rgba(38bdf856,139,189,223,248,0.8)", "rgba(34d39952,77,211,57,153,0.8)", "rgba(a78bfa167,120,139,191,250,0.8)"],
-                borderColor: ["#38bdf8", "#34d399", "#a78bfa"],
-                borderWidth: 1,
-                borderRadius: 4,
-            }]
+            labels: ['杨新弘 38.16%', '王波 26.98%', '莫英坤 17.78%'],
+            datasets: [
+                {
+                    label: '已完成',
+                    data: [38.16, 26.98, 17.78],
+                    backgroundColor: ['rgba(56,189,248,0.8)', 'rgba(52,211,153,0.8)', 'rgba(167,139,250,0.8)'],
+                    borderColor: ['#38bdf8', '#34d399', '#a78bfa'],
+                    borderWidth: 1,
+                    borderRadius: 4,
+                }
+            ]
         },
         options: {
             indexAxis: 'y',
             responsive: true,
             maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(ctx) {
+                            return ' 完成 ' + ctx.raw + '%';
+                        }
+                    }
+                }
+            },
             scales: {
-                x: { beginAtZero: true, max: 100, ticks: { color: '#64748b', font: { size: 10 }, callback: function(v) { return v + '%'; } }, grid: { color: 'rgba(255,255,255,0.05)' } },
-                y: { ticks: { color: '#e2e8f0', font: { size: 12, weight: '600' } }, grid: { display: false } }
+                x: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: { color: '#64748b', font: { size: 10 }, callback: function(v) { return v + '%'; } },
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                y: {
+                    ticks: { color: '#e2e8f0', font: { size: 12, weight: '600' } },
+                    grid: { display: false }
+                }
             }
         }
     });
