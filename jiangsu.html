@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html lang='zh-CN'>
+<html lang="zh-CN">
 <head>
-    <meta charset='UTF-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>江苏工程粉销量</title>
-    <script src='https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
             color: #e2e8f0;
             min-height: 100vh;
             padding: 12px;
             padding-bottom: 30px;
         }
+
+        /* 顶部切换栏 */
         .top-switch {
             display: flex;
             justify-content: center;
@@ -34,11 +36,17 @@
             transition: all 0.3s;
         }
         .switch-btn.active {
+            background: linear-gradient(135deg, rgba(56,189,248,0.2), rgba(99,102,241,0.15));
+            border-color: rgba(56,189,248,0.4);
+            color: #38bdf8;
+        }
+        .switch-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); }
+        .switch-btn.active {
             background: linear-gradient(135deg, rgba(251,146,60,0.25), rgba(249,115,22,0.2));
             border-color: rgba(251,146,60,0.5);
             color: #fb923c;
         }
-        .switch-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); }
+
         .header {
             text-align: center;
             padding: 16px 0 12px;
@@ -57,6 +65,12 @@
         .progress-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; margin-top: 6px; }
         .progress-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
         .progress-fill.orange { background: linear-gradient(90deg, #fb923c, #f97316); }
+
+        .chart-section { background: rgba(30,41,59,0.5); border-radius: 12px; padding: 14px; margin-bottom: 14px; border: 1px solid rgba(255,255,255,0.06); }
+        .chart-container { position: relative; width: 100%; height: 280px; }
+        .section-title { font-size: 14px; font-weight: 600; color: #f1f5f9; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+        .section-title::before { content: ''; width: 3px; height: 14px; background: #fb923c; border-radius: 2px; }
+
         .sales-list { display: flex; flex-direction: column; gap: 10px; }
         .sale-item { background: rgba(15,23,42,0.5); border-radius: 10px; padding: 12px; border-left: 3px solid; }
         .sale-item.zhangjing { border-left-color: #fb923c; }
@@ -82,184 +96,180 @@
         .fill.shashuang-fill { background: linear-gradient(90deg, #a78bfa, #c084fc); }
         .fill.jianglei-fill { background: linear-gradient(90deg, #f472b6, #ec4899); }
         .pct-text { font-size: 11px; color: #64748b; text-align: right; margin-top: 3px; }
-        .chart-section { background: rgba(30,41,59,0.5); border-radius: 12px; padding: 14px; margin-bottom: 14px; border: 1px solid rgba(255,255,255,0.06); }
-        .chart-container { position: relative; width: 100%; height: 280px; }
-        .section-title { font-size: 14px; font-weight: 600; color: #f1f5f9; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
-        .section-title::before { content: ''; width: 3px; height: 14px; background: #fb923c; border-radius: 2px; }
         .footer { text-align: center; font-size: 10px; color: #475569; padding: 10px 0; }
         .data-note { background: rgba(251,146,60,0.08); border: 1px solid rgba(251,146,60,0.2); border-radius: 8px; padding: 8px 12px; font-size: 11px; color: #fb923c; margin-bottom: 14px; text-align: center; }
     </style>
 </head>
 <body>
 
-<div class='top-switch'>
-    <a href='index.html' class='switch-btn'>上海&华南</a>
-    <a href='jiangsu.html' class='switch-btn active'>江苏团队</a>
+<div class="top-switch">
+    <a href="index.html" class="switch-btn">上海&华南</a>
+    <a href="jiangsu.html" class="switch-btn active">江苏团队</a>
 </div>
 
-<div class='header'>
+<div class="header">
     <h1>江苏工程粉销量</h1>
-    <div class='subtitle'>圣戈班 · 江苏销售团队数据看板</div>
+    <div class="subtitle">圣戈班 · 江苏销售团队数据看板</div>
 </div>
 
-<div class='data-note' id='dataNote'>
-    数据来源：Sales Report_工程粉_20260521（截至5月21日）
+<div class="data-note" id="dataNote">
+    数据来源：转发: Sales Report_工程粉_20260521（截至05月21日）
 </div>
 
-<div class='team-overview'>
-    <div class='overview-card'>
-        <div class='label'>团队本月销量 (MTD)</div>
-        <div class='value unit' id='teamMtd'>136.38</div>
-        <div class='sub'>截至2026-05-21</div>
+<div class="team-overview">
+    <div class="overview-card">
+        <div class="label">团队本月销量 (MTD)</div>
+        <div class="value unit" id="teamMtd">136.38</div>
+        <div class="sub">截至05月21日</div>
     </div>
-    <div class='overview-card'>
-        <div class='label'>团队年度销量 (YTD)</div>
-        <div class='value unit' id='teamYtd'>852.98</div>
-        <div class='sub'>2026年累计</div>
+    <div class="overview-card">
+        <div class="label">团队年度销量 (YTD)</div>
+        <div class="value unit" id="teamYtd">851.98</div>
+        <div class="sub">2026年累计</div>
     </div>
-    <div class='overview-card highlight'>
-        <div class='label'>团队年度目标完成度</div>
-        <div class='value'><span id='teamPct'>29.24</span><span style='font-size:14px;color:#94a3b8;margin-left:2px;'>%</span></div>
-        <div style='display:flex;justify-content:space-between;font-size:11px;color:#64748b;margin-top:4px;'>
-            <span>已达成 852.98 / 2918 万</span>
-            <span id='teamRemaining'>剩余 2065.02 万</span>
+    <div class="overview-card highlight">
+        <div class="label">团队年度目标完成度</div>
+        <div class="value"><span id="teamPct">29.20</span><span style="font-size:14px;color:#94a3b8;margin-left:2px;">%</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:#64748b;margin-top:4px;">
+            <span>已达成 851.98 / 2918 万</span>
+            <span id="teamRemaining">剩余 2066.02 万</span>
         </div>
-        <div class='progress-bar'>
-            <div class='progress-fill orange' id='teamProgress' style='width: 29.24%'></div>
+        <div class="progress-bar">
+            <div class="progress-fill orange" id="teamProgress" style="width: 29.2%"></div>
         </div>
-    </div>
-</div>
-
-<div class='chart-section'>
-    <div class='section-title'>个人年度目标完成度</div>
-    <div class='chart-container'>
-        <canvas id='progressChart'></canvas>
     </div>
 </div>
 
-<div class='chart-section' style='margin-top:-8px;'>
-    <div class='section-title'>个人销售明细</div>
-    <div class='sales-list'>
+<div class="chart-section">
+    <div class="section-title">个人年度目标完成度</div>
+    <div class="chart-container">
+        <canvas id="progressChart"></canvas>
+    </div>
+</div>
 
-        <div class='sale-item zhangjing'>
-            <div class='sale-header'>
-                <span class='sale-name'>张静</span>
-                <span class='sale-region-tag tag-jiangsu'>江苏</span>
+<div class="chart-section" style="margin-top:-8px;">
+    <div class="section-title">个人销售明细</div>
+    <div class="sales-list">
+
+        <div class="sale-item zhangjing">
+            <div class="sale-header">
+                <span class="sale-name">张静</span>
+                <span class="sale-region-tag tag-jiangsu">江苏</span>
             </div>
-            <div class='sale-row'>
-                <span class='sale-label'>本月销量 (MTD)</span>
-                <span class='sale-data mtd' id='zhangjingMtd'>58.30<span style='font-size:11px;color:#64748b;'> 万</span></span>
+            <div class="sale-row">
+                <span class="sale-label">本月销量 (MTD)</span>
+                <span class="sale-data mtd" id="zhangjingMtd">58.30<span style="font-size:11px;color:#64748b;"> 万</span></span>
             </div>
-            <div class='sale-row'>
-                <span class='sale-label'>年度累计 (YTD)</span>
-                <span class='sale-data ytd' id='zhangjingYtd'>346.71<span style='font-size:11px;color:#64748b;'> 万</span></span>
+            <div class="sale-row">
+                <span class="sale-label">年度累计 (YTD)</span>
+                <span class="sale-data ytd" id="zhangjingYtd">346.71<span style="font-size:11px;color:#64748b;"> 万</span></span>
             </div>
-            <div class='sale-row'>
-                <span class='sale-label'>年度目标</span>
-                <span class='sale-data target'>700 万</span>
+            <div class="sale-row">
+                <span class="sale-label">年度目标</span>
+                <span class="sale-data target">700 万</span>
             </div>
-            <div class='mini-progress'>
-                <div class='fill zhangjing-fill' id='zhangjingProgress' style='width: 49.53%'></div>
+            <div class="mini-progress">
+                <div class="fill zhangjing-fill" id="zhangjingProgress" style="width: 49.53%"></div>
             </div>
-            <div class='pct-text' id='zhangjingPct'>完成度 49.53%</div>
+            <div class="pct-text" id="zhangjingPct">完成度 49.53%</div>
         </div>
 
-        <div class='sale-item liuxiuhai'>
-            <div class='sale-header'>
-                <span class='sale-name'>刘修海</span>
-                <span class='sale-region-tag tag-jiangsu'>江苏</span>
+        <div class="sale-item liuxiuhai">
+            <div class="sale-header">
+                <span class="sale-name">刘修海</span>
+                <span class="sale-region-tag tag-jiangsu">江苏</span>
             </div>
-            <div class='sale-row'>
-                <span class='sale-label'>本月销量 (MTD)</span>
-                <span class='sale-data mtd' id='liuxiuhaiMtd'>16.82<span style='font-size:11px;color:#64748b;'> 万</span></span>
+            <div class="sale-row">
+                <span class="sale-label">本月销量 (MTD)</span>
+                <span class="sale-data mtd" id="liuxiuhaiMtd">16.82<span style="font-size:11px;color:#64748b;"> 万</span></span>
             </div>
-            <div class='sale-row'>
-                <span class='sale-label'>年度累计 (YTD)</span>
-                <span class='sale-data ytd' id='liuxiuhaiYtd'>72.99<span style='font-size:11px;color:#64748b;'> 万</span></span>
+            <div class="sale-row">
+                <span class="sale-label">年度累计 (YTD)</span>
+                <span class="sale-data ytd" id="liuxiuhaiYtd">72.99<span style="font-size:11px;color:#64748b;"> 万</span></span>
             </div>
-            <div class='sale-row'>
-                <span class='sale-label'>年度目标</span>
-                <span class='sale-data target'>500 万</span>
+            <div class="sale-row">
+                <span class="sale-label">年度目标</span>
+                <span class="sale-data target">500 万</span>
             </div>
-            <div class='mini-progress'>
-                <div class='fill liuxiuhai-fill' id='liuxiuhaiProgress' style='width: 14.60%'></div>
+            <div class="mini-progress">
+                <div class="fill liuxiuhai-fill" id="liuxiuhaiProgress" style="width: 14.6%"></div>
             </div>
-            <div class='pct-text' id='liuxiuhaiPct'>完成度 14.60%</div>
+            <div class="pct-text" id="liuxiuhaiPct">完成度 14.6%</div>
         </div>
 
-        <div class='sale-item tangqingliang'>
-            <div class='sale-header'>
-                <span class='sale-name'>汤庆亮</span>
-                <span class='sale-region-tag tag-jiangsu'>江苏</span>
+        <div class="sale-item tangqingliang">
+            <div class="sale-header">
+                <span class="sale-name">汤庆亮</span>
+                <span class="sale-region-tag tag-jiangsu">江苏</span>
             </div>
-            <div class='sale-row'>
-                <span class='sale-label'>本月销量 (MTD)</span>
-                <span class='sale-data mtd' id='tangqingliangMtd'>45.81<span style='font-size:11px;color:#64748b;'> 万</span></span>
+            <div class="sale-row">
+                <span class="sale-label">本月销量 (MTD)</span>
+                <span class="sale-data mtd" id="tangqingliangMtd">45.81<span style="font-size:11px;color:#64748b;"> 万</span></span>
             </div>
-            <div class='sale-row'>
-                <span class='sale-label'>年度累计 (YTD)</span>
-                <span class='sale-data ytd' id='tangqingliangYtd'>322.87<span style='font-size:11px;color:#64748b;'> 万</span></span>
+            <div class="sale-row">
+                <span class="sale-label">年度累计 (YTD)</span>
+                <span class="sale-data ytd" id="tangqingliangYtd">322.87<span style="font-size:11px;color:#64748b;"> 万</span></span>
             </div>
-            <div class='sale-row'>
-                <span class='sale-label'>年度目标</span>
-                <span class='sale-data target'>588 万</span>
+            <div class="sale-row">
+                <span class="sale-label">年度目标</span>
+                <span class="sale-data target">588 万</span>
             </div>
-            <div class='mini-progress'>
-                <div class='fill tangqingliang-fill' id='tangqingliangProgress' style='width: 54.91%'></div>
+            <div class="mini-progress">
+                <div class="fill tangqingliang-fill" id="tangqingliangProgress" style="width: 54.91%"></div>
             </div>
-            <div class='pct-text' id='tangqingliangPct'>完成度 54.91%</div>
+            <div class="pct-text" id="tangqingliangPct">完成度 54.91%</div>
         </div>
 
-        <div class='sale-item shashuang'>
-            <div class='sale-header'>
-                <span class='sale-name'>沙爽</span>
-                <span class='sale-region-tag tag-jiangsu'>江苏</span>
+        <div class="sale-item shashuang">
+            <div class="sale-header">
+                <span class="sale-name">沙爽</span>
+                <span class="sale-region-tag tag-jiangsu">江苏</span>
             </div>
-            <div class='sale-row'>
-                <span class='sale-label'>本月销量 (MTD)</span>
-                <span class='sale-data mtd' id='shashuangMtd'>4.19<span style='font-size:11px;color:#64748b;'> 万</span></span>
+            <div class="sale-row">
+                <span class="sale-label">本月销量 (MTD)</span>
+                <span class="sale-data mtd" id="shashuangMtd">4.19<span style="font-size:11px;color:#64748b;"> 万</span></span>
             </div>
-            <div class='sale-row'>
-                <span class='sale-label'>年度累计 (YTD)</span>
-                <span class='sale-data ytd' id='shashuangYtd'>48.23<span style='font-size:11px;color:#64748b;'> 万</span></span>
+            <div class="sale-row">
+                <span class="sale-label">年度累计 (YTD)</span>
+                <span class="sale-data ytd" id="shashuangYtd">48.23<span style="font-size:11px;color:#64748b;"> 万</span></span>
             </div>
-            <div class='sale-row'>
-                <span class='sale-label'>年度目标</span>
-                <span class='sale-data target'>646 万</span>
+            <div class="sale-row">
+                <span class="sale-label">年度目标</span>
+                <span class="sale-data target">646 万</span>
             </div>
-            <div class='mini-progress'>
-                <div class='fill shashuang-fill' id='shashuangProgress' style='width: 7.47%'></div>
+            <div class="mini-progress">
+                <div class="fill shashuang-fill" id="shashuangProgress" style="width: 7.47%"></div>
             </div>
-            <div class='pct-text' id='shashuangPct'>完成度 7.47%</div>
+            <div class="pct-text" id="shashuangPct">完成度 7.47%</div>
         </div>
 
-        <div class='sale-item jianglei'>
-            <div class='sale-header'>
-                <span class='sale-name'>姜磊</span>
-                <span class='sale-region-tag tag-jiangsu'>江苏</span>
+        <div class="sale-item jianglei">
+            <div class="sale-header">
+                <span class="sale-name">姜磊</span>
+                <span class="sale-region-tag tag-jiangsu">江苏</span>
             </div>
-            <div class='sale-row'>
-                <span class='sale-label'>本月销量 (MTD)</span>
-                <span class='sale-data mtd' id='jiangleiMtd'>11.26<span style='font-size:11px;color:#64748b;'> 万</span></span>
+            <div class="sale-row">
+                <span class="sale-label">本月销量 (MTD)</span>
+                <span class="sale-data mtd" id="jiangleiMtd">11.26<span style="font-size:11px;color:#64748b;"> 万</span></span>
             </div>
-            <div class='sale-row'>
-                <span class='sale-label'>年度累计 (YTD)</span>
-                <span class='sale-data ytd' id='jiangleiYtd'>61.18<span style='font-size:11px;color:#64748b;'> 万</span></span>
+            <div class="sale-row">
+                <span class="sale-label">年度累计 (YTD)</span>
+                <span class="sale-data ytd" id="jiangleiYtd">61.18<span style="font-size:11px;color:#64748b;"> 万</span></span>
             </div>
-            <div class='sale-row'>
-                <span class='sale-label'>年度目标</span>
-                <span class='sale-data target'>484 万</span>
+            <div class="sale-row">
+                <span class="sale-label">年度目标</span>
+                <span class="sale-data target">484 万</span>
             </div>
-            <div class='mini-progress'>
-                <div class='fill jianglei-fill' id='jiangleiProgress' style='width: 12.64%'></div>
+            <div class="mini-progress">
+                <div class="fill jianglei-fill" id="jiangleiProgress" style="width: 12.64%"></div>
             </div>
-            <div class='pct-text' id='jiangleiPct'>完成度 12.64%</div>
+            <div class="pct-text" id="jiangleiPct">完成度 12.64%</div>
         </div>
 
     </div>
 </div>
 
-<div class='footer'>
+<div class="footer">
     数据更新时间：2026-05-21 · 来源：Sales Report_工程粉日报
 </div>
 
@@ -268,16 +278,15 @@
     var ctx = document.getElementById('progressChart');
     if (!ctx) return;
     var progCtx = ctx.getContext('2d');
-
     new Chart(progCtx, {
         type: 'bar',
         data: {
-            labels: ['张静 49.53%', '汤庆亮 54.91%', '刘修海 14.60%', '沙爽 7.47%', '姜磊 12.64%'],
+            labels: ["张静 49.53%", "汤庆亮 54.91%", "刘修海 14.6%", "姜磊 12.64%", "沙爽 7.47%"],
             datasets: [{
                 label: '已完成',
-                data: [49.53, 54.91, 14.60, 7.47, 12.64],
-                backgroundColor: ['rgba(251,146,60,0.8)', 'rgba(96,165,250,0.8)', 'rgba(52,211,153,0.8)', 'rgba(167,139,250,0.8)', 'rgba(244,114,182,0.8)'],
-                borderColor: ['#fb923c', '#60a5fa', '#34d399', '#a78bfa', '#f472b6'],
+                data: [49.53, 54.91, 14.6, 12.64, 7.47],
+                backgroundColor: ["rgba(fb923c251,185,146,35,60,0.8)", "rgba(60a5fa96,10,165,95,250,0.8)", "rgba(34d39952,77,211,57,153,0.8)", "rgba(f472b6244,71,114,43,182,0.8)", "rgba(a78bfa167,120,139,191,250,0.8)"],
+                borderColor: ["#fb923c", "#60a5fa", "#34d399", "#f472b6", "#a78bfa"],
                 borderWidth: 1,
                 borderRadius: 4,
             }]
@@ -286,27 +295,10 @@
             indexAxis: 'y',
             responsive: true,
             maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: function(ctx) {
-                            return ' 完成 ' + ctx.raw + '%';
-                        }
-                    }
-                }
-            },
+            plugins: { legend: { display: false } },
             scales: {
-                x: {
-                    beginAtZero: true,
-                    max: 100,
-                    ticks: { color: '#64748b', font: { size: 10 }, callback: function(v) { return v + '%'; } },
-                    grid: { color: 'rgba(255,255,255,0.05)' }
-                },
-                y: {
-                    ticks: { color: '#e2e8f0', font: { size: 12, weight: '600' } },
-                    grid: { display: false }
-                }
+                x: { beginAtZero: true, max: 100, ticks: { color: '#64748b', font: { size: 10 }, callback: function(v) { return v + '%'; } }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                y: { ticks: { color: '#e2e8f0', font: { size: 12, weight: '600' } }, grid: { display: false } }
             }
         }
     });
