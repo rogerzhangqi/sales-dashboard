@@ -1,29 +1,30 @@
 <!DOCTYPE html>
-<html lang='zh-CN'>
+<html lang="zh-CN">
 <head>
-    <meta charset='UTF-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>安徽工程粉销量</title>
-    <script src='https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
             color: #e2e8f0;
             min-height: 100vh;
             padding: 12px;
             padding-bottom: 30px;
         }
+        /* 顶部切换栏 */
         .top-switch {
             display: flex;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
             margin-bottom: 12px;
         }
         .switch-btn {
             display: inline-block;
-            padding: 8px 16px;
+            padding: 8px 18px;
             border-radius: 20px;
             font-size: 13px;
             font-weight: 600;
@@ -34,11 +35,17 @@
             transition: all 0.3s;
         }
         .switch-btn.active {
+            background: linear-gradient(135deg, rgba(56,189,248,0.2), rgba(99,102,241,0.15));
+            border-color: rgba(56,189,248,0.4);
+            color: #38bdf8;
+        }
+        .switch-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); }
+        .switch-btn.active {
             background: linear-gradient(135deg, rgba(45,212,191,0.25), rgba(16,185,129,0.2));
             border-color: rgba(45,212,191,0.5);
             color: #2dd4bf;
         }
-        .switch-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); }
+
         .header {
             text-align: center;
             padding: 16px 0 12px;
@@ -57,6 +64,12 @@
         .progress-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; margin-top: 6px; }
         .progress-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
         .progress-fill.green { background: linear-gradient(90deg, #2dd4bf, #10b981); }
+
+        .chart-section { background: rgba(30,41,59,0.5); border-radius: 12px; padding: 14px; margin-bottom: 14px; border: 1px solid rgba(255,255,255,0.06); }
+        .chart-container { position: relative; width: 100%; height: 200px; }
+        .section-title { font-size: 14px; font-weight: 600; color: #f1f5f9; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+        .section-title::before { content: ''; width: 3px; height: 14px; background: #2dd4bf; border-radius: 2px; }
+
         .sales-list { display: flex; flex-direction: column; gap: 10px; }
         .sale-item { background: rgba(15,23,42,0.5); border-radius: 10px; padding: 12px; border-left: 3px solid; }
         .sale-item.zhangjun { border-left-color: #2dd4bf; }
@@ -76,116 +89,111 @@
         .fill.zhangjun-fill { background: linear-gradient(90deg, #2dd4bf, #14b8a6); }
         .fill.zhangjie-fill { background: linear-gradient(90deg, #10b981, #059669); }
         .pct-text { font-size: 11px; color: #64748b; text-align: right; margin-top: 3px; }
-        .chart-section { background: rgba(30,41,59,0.5); border-radius: 12px; padding: 14px; margin-bottom: 14px; border: 1px solid rgba(255,255,255,0.06); }
-        .chart-container { position: relative; width: 100%; height: 200px; }
-        .section-title { font-size: 14px; font-weight: 600; color: #f1f5f9; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
-        .section-title::before { content: ''; width: 3px; height: 14px; background: #2dd4bf; border-radius: 2px; }
         .footer { text-align: center; font-size: 10px; color: #475569; padding: 10px 0; }
         .data-note { background: rgba(45,212,191,0.08); border: 1px solid rgba(45,212,191,0.2); border-radius: 8px; padding: 8px 12px; font-size: 11px; color: #2dd4bf; margin-bottom: 14px; text-align: center; }
     </style>
 </head>
 <body>
 
-<div class='top-switch'>
-    <a href='index.html' class='switch-btn'>上海&华南</a>
-    <a href='jiangsu.html' class='switch-btn'>江苏团队</a>
-    <a href='anhui.html' class='switch-btn active'>安徽团队</a>
+<div class="top-switch">
+    <a href="index.html" class="switch-btn">上海&华南</a>
+    <a href="jiangsu.html" class="switch-btn">江苏团队</a>
+    <a href="anhui.html" class="switch-btn active">安徽团队</a>
 </div>
 
-<div class='header'>
+<div class="header">
     <h1>安徽工程粉销量</h1>
-    <div class='subtitle'>圣戈班 · 安徽销售团队数据看板</div>
+    <div class="subtitle">圣戈班 · 安徽销售团队数据看板</div>
 </div>
 
-<div class='data-note' id='dataNote'>
-    数据来源：Sales Report_工程粉_20260521（截至5月21日）
+<div class="data-note" id="dataNote">
+    数据来源：转发: Sales Report_工程粉_20260521（截至05月21日）
 </div>
 
-<div class='team-overview'>
-    <div class='overview-card'>
-        <div class='label'>团队本月销量 (MTD)</div>
-        <div class='value unit' id='teamMtd'>0.00</div>
-        <div class='sub'>截至2026-05-21</div>
+<div class="team-overview">
+    <div class="overview-card">
+        <div class="label">团队本月销量 (MTD)</div>
+        <div class="value unit" id="teamMtd">0.00</div>
+        <div class="sub">截至05月21日</div>
     </div>
-    <div class='overview-card'>
-        <div class='label'>团队年度销量 (YTD)</div>
-        <div class='value unit' id='teamYtd'>0.00</div>
-        <div class='sub'>2026年累计</div>
+    <div class="overview-card">
+        <div class="label">团队年度销量 (YTD)</div>
+        <div class="value unit" id="teamYtd">242.49</div>
+        <div class="sub">2026年累计</div>
     </div>
-    <div class='overview-card highlight'>
-        <div class='label'>团队年度目标完成度</div>
-        <div class='value'><span id='teamPct'>0.00</span><span style='font-size:14px;color:#94a3b8;margin-left:2px;'>%</span></div>
-        <div style='display:flex;justify-content:space-between;font-size:11px;color:#64748b;margin-top:4px;'>
-            <span>已达成 0.00 / 1060 万</span>
-            <span id='teamRemaining'>剩余 1060.00 万</span>
+    <div class="overview-card highlight">
+        <div class="label">团队年度目标完成度</div>
+        <div class="value"><span id="teamPct">22.88</span><span style="font-size:14px;color:#94a3b8;margin-left:2px;">%</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:#64748b;margin-top:4px;">
+            <span>已达成 242.49 / 1060 万</span>
+            <span id="teamRemaining">剩余 817.51 万</span>
         </div>
-        <div class='progress-bar'>
-            <div class='progress-fill green' id='teamProgress' style='width: 0%'></div>
+        <div class="progress-bar">
+            <div class="progress-fill green" id="teamProgress" style="width: 22.88%"></div>
         </div>
     </div>
 </div>
 
-<div class='chart-section'>
-    <div class='section-title'>个人年度目标完成度</div>
-    <div class='chart-container'>
-        <canvas id='progressChart'></canvas>
+<div class="chart-section">
+    <div class="section-title">个人年度目标完成度</div>
+    <div class="chart-container">
+        <canvas id="progressChart"></canvas>
     </div>
 </div>
 
-<div class='chart-section' style='margin-top:-8px;'>
-    <div class='section-title'>个人销售明细</div>
-    <div class='sales-list'>
+<div class="chart-section" style="margin-top:-8px;">
+    <div class="section-title">个人销售明细</div>
+    <div class="sales-list">
 
-        <div class='sale-item zhangjun'>
-            <div class='sale-header'>
-                <span class='sale-name'>张军</span>
-                <span class='sale-region-tag tag-anhui'>安徽</span>
+        <div class="sale-item zhangjun">
+            <div class="sale-header">
+                <span class="sale-name">张军</span>
+                <span class="sale-region-tag tag-anhui">安徽</span>
             </div>
-            <div class='sale-row'>
-                <span class='sale-label'>本月销量 (MTD)</span>
-                <span class='sale-data mtd' id='zhangjunMtd'>0.00<span style='font-size:11px;color:#64748b;'> 万</span></span>
+            <div class="sale-row">
+                <span class="sale-label">本月销量 (MTD)</span>
+                <span class="sale-data mtd" id="zhangjunMtd">0.00<span style="font-size:11px;color:#64748b;"> 万</span></span>
             </div>
-            <div class='sale-row'>
-                <span class='sale-label'>年度累计 (YTD)</span>
-                <span class='sale-data ytd' id='zhangjunYtd'>0.00<span style='font-size:11px;color:#64748b;'> 万</span></span>
+            <div class="sale-row">
+                <span class="sale-label">年度累计 (YTD)</span>
+                <span class="sale-data ytd" id="zhangjunYtd">174.31<span style="font-size:11px;color:#64748b;"> 万</span></span>
             </div>
-            <div class='sale-row'>
-                <span class='sale-label'>年度目标</span>
-                <span class='sale-data target'>360 万</span>
+            <div class="sale-row">
+                <span class="sale-label">年度目标</span>
+                <span class="sale-data target">360 万</span>
             </div>
-            <div class='mini-progress'>
-                <div class='fill zhangjun-fill' id='zhangjunProgress' style='width: 0%'></div>
+            <div class="mini-progress">
+                <div class="fill zhangjun-fill" id="zhangjunProgress" style="width: 48.42%"></div>
             </div>
-            <div class='pct-text' id='zhangjunPct'>完成度 0.00%</div>
-        </div>
-
-        <div class='sale-item zhangjie'>
-            <div class='sale-header'>
-                <span class='sale-name'>张杰</span>
-                <span class='sale-region-tag tag-anhui'>安徽</span>
-            </div>
-            <div class='sale-row'>
-                <span class='sale-label'>本月销量 (MTD)</span>
-                <span class='sale-data mtd' id='zhangjieMtd'>0.00<span style='font-size:11px;color:#64748b;'> 万</span></span>
-            </div>
-            <div class='sale-row'>
-                <span class='sale-label'>年度累计 (YTD)</span>
-                <span class='sale-data ytd' id='zhangjieYtd'>0.00<span style='font-size:11px;color:#64748b;'> 万</span></span>
-            </div>
-            <div class='sale-row'>
-                <span class='sale-label'>年度目标</span>
-                <span class='sale-data target'>700 万</span>
-            </div>
-            <div class='mini-progress'>
-                <div class='fill zhangjie-fill' id='zhangjieProgress' style='width: 0%'></div>
-            </div>
-            <div class='pct-text' id='zhangjiePct'>完成度 0.00%</div>
+            <div class="pct-text" id="zhangjunPct">完成度 48.42%</div>
         </div>
 
+        <div class="sale-item zhangjie">
+            <div class="sale-header">
+                <span class="sale-name">张杰</span>
+                <span class="sale-region-tag tag-anhui">安徽</span>
+            </div>
+            <div class="sale-row">
+                <span class="sale-label">本月销量 (MTD)</span>
+                <span class="sale-data mtd" id="zhangjieMtd">0.00<span style="font-size:11px;color:#64748b;"> 万</span></span>
+            </div>
+            <div class="sale-row">
+                <span class="sale-label">年度累计 (YTD)</span>
+                <span class="sale-data ytd" id="zhangjieYtd">68.18<span style="font-size:11px;color:#64748b;"> 万</span></span>
+            </div>
+            <div class="sale-row">
+                <span class="sale-label">年度目标</span>
+                <span class="sale-data target">700 万</span>
+            </div>
+            <div class="mini-progress">
+                <div class="fill zhangjie-fill" id="zhangjieProgress" style="width: 9.74%"></div>
+            </div>
+            <div class="pct-text" id="zhangjiePct">完成度 9.74%</div>
+        </div>
     </div>
 </div>
 
-<div class='footer'>
+<div class="footer">
     数据更新时间：2026-05-21 · 来源：Sales Report_工程粉日报
 </div>
 
@@ -194,16 +202,15 @@
     var ctx = document.getElementById('progressChart');
     if (!ctx) return;
     var progCtx = ctx.getContext('2d');
-
     new Chart(progCtx, {
         type: 'bar',
         data: {
-            labels: ['张杰 0.00%', '张军 0.00%'],
+            labels: ["张军 48.42%", "张杰 9.74%"],
             datasets: [{
                 label: '已完成',
-                data: [0, 0],
-                backgroundColor: ['rgba(16,185,129,0.8)', 'rgba(45,212,191,0.8)'],
-                borderColor: ['#10b981', '#2dd4bf'],
+                data: [48.42, 9.74],
+                backgroundColor: ["rgba(45,212,191,0.8)", "rgba(16,185,129,0.8)"],
+                borderColor: ["#2dd4bf", "#10b981"],
                 borderWidth: 1,
                 borderRadius: 4,
             }]
@@ -212,27 +219,10 @@
             indexAxis: 'y',
             responsive: true,
             maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: function(ctx) {
-                            return ' 完成 ' + ctx.raw + '%';
-                        }
-                    }
-                }
-            },
+            plugins: { legend: { display: false } },
             scales: {
-                x: {
-                    beginAtZero: true,
-                    max: 100,
-                    ticks: { color: '#64748b', font: { size: 10 }, callback: function(v) { return v + '%'; } },
-                    grid: { color: 'rgba(255,255,255,0.05)' }
-                },
-                y: {
-                    ticks: { color: '#e2e8f0', font: { size: 12, weight: '600' } },
-                    grid: { display: false }
-                }
+                x: { beginAtZero: true, max: 100, ticks: { color: '#64748b', font: { size: 10 }, callback: function(v) { return v + '%'; } }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                y: { ticks: { color: '#e2e8f0', font: { size: 12, weight: '600' } }, grid: { display: false } }
             }
         }
     });
